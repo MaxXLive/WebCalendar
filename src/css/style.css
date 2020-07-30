@@ -1,0 +1,287 @@
+body{
+    font-family: Roboto, sans-serif;
+}
+
+.navbar{
+    z-index: 10;
+    box-shadow: 0 0 0.5rem black;
+    min-height: 4rem;
+}
+
+.navbar-brand{
+    text-transform: uppercase;
+}
+
+#listView, #calendarMonthView , #image-input{
+    display: none;
+}
+
+.container{
+    margin-top: 1rem;
+}
+
+.spinnerItem{
+    list-style: none;
+    margin-top: 30%;
+}
+
+.list-group-item{
+    transition: 0.3s;
+    color: black;
+}
+
+.list-group-item:hover{
+    background-color: #3f51b5;
+    color: white;
+}
+
+.list-group-item:hover::after{
+    float: right;
+    content: "Show Details";
+}
+
+.modal-content{
+    box-shadow: 1rem 1rem 2rem 0rem dimgray;
+}
+
+#modalImage{
+    max-height: 10rem;
+    min-height: 10rem;
+    width: 100%;
+    margin: 0;
+    object-fit: cover;
+    border-top-left-radius: 0.2rem;
+    border-top-right-radius: 0.2rem;
+    transition: max-height 0.1s ease-in;
+}
+
+.top-image-container-view:hover #modalImage{
+    max-height: 1000em;
+    transition: max-height 2s ease-in;
+}
+
+.top-image-container-hover:hover #hover-image{
+    opacity: 1;
+    cursor: pointer;
+}
+
+#hover-image {
+    height: 10rem;
+    width: 100%;
+    margin: 0;
+    object-fit: cover;
+    border-top-left-radius: 0.2rem;
+    border-top-right-radius: 0.2rem;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    transition: .5s ease;
+}
+
+#detailsModalBody{
+    box-shadow: 0 -0.5rem 0.5rem darkslategray;
+    padding: 1rem;
+}
+
+#modalCloseButton{
+    z-index: 2;
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-color: white;
+    opacity: 1;
+    width: 3rem;
+    height: 2rem;
+    box-shadow: -0.1rem 0.1rem 0.5rem darkslategray;
+    border-bottom-left-radius: 0.2rem;
+    border-top-right-radius: 0.2rem;
+}
+
+#modalCloseButton:hover{
+    background-color: lightgray;
+}
+
+#modalCloseButton:focus {
+    outline: none;
+}
+
+.fieldText{
+    margin-top: 0.1rem;
+    font-size: 0.9rem;
+    margin-left: 0.5rem;
+}
+
+#descField{
+    min-height: 2.4rem;
+    max-height: 15rem;
+}
+
+.time-label{
+    width: 6rem;
+}
+
+.allDaySpacer{
+    width: calc(100% - 160px);
+    border-top: 1px solid #ced4da;
+    border-bottom: 1px solid #ced4da;
+}
+
+#allDaySwitch-box{
+    padding-left: 1rem;
+}
+
+#statusGroup{
+    width: calc(100% - 50px);
+}
+
+.statusButtons{
+    width: 100%;
+}
+
+#statusField-label, #categoryDropdown-label{
+    width: 50px;
+}
+
+#categoryDropdownButton{
+    width: calc(100% - 50px);
+    text-align: right;
+}
+
+.material-icons{
+    vertical-align: middle;
+}
+
+#categoryDropDownMenu{
+    padding: 10px;
+}
+.categoryCheckbox{
+    margin-right: 5px;
+}
+.dropdown-item{
+    padding-left: 5px;
+    cursor: pointer;
+}
+
+.dropdown-item > *{
+    cursor: pointer;
+}
+
+#calendarMonth{
+    margin-top: 1em;
+    padding: 10px;
+}
+
+.calendarButtons{
+    float: right;
+    margin-bottom: 8px;
+}
+
+#calendarTitle{
+    float: left;
+}
+
+#monthTableBody > tr{
+    height: 10vh;
+}
+
+.calendarCell:hover, .calendarCellToday{
+    color: white;
+}
+
+.calendarCell{
+    position: relative;
+    padding-left: 0 !important;
+    padding-right: -0 !important;
+    padding-top: 0 !important;
+    width: 100px;
+}
+
+.calendarCell:hover .innerCell{
+    background-color: #5a6268;
+    border-radius: 50%;
+    color: white;
+    box-shadow: gray 1px 1px 1px;
+}
+
+.innerCell{
+    cursor: pointer;
+    margin: 10px;
+    text-align: center;
+    vertical-align: middle;
+    width: 2em;
+    height: 2em;
+    line-height: 2em;
+}
+
+.calendarCellToday .innerCell{
+    background-color: #343a40;
+    border-radius: 50%;
+    box-shadow: gray 1px 1px 1px;
+    cursor: pointer;
+    margin: 10px;
+    text-align: center;
+    vertical-align: middle;
+    width: 2em;
+    height: 2em;
+    line-height: 2em;
+}
+
+.calendarEvent{
+    width: calc(100% + 1px);
+    border-radius: 0;
+    margin-bottom: 1em;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.calendarEvent[disabled]{
+    visibility: hidden;
+}
+
+.calendarEvent:hover .calendarEvent{
+    background-color: red;
+}
+
+.eventStart{
+    border-top-left-radius: 0.2rem;
+    border-bottom-left-radius: 0.2rem;
+    width: 100%;
+    margin-left: 0.75rem;
+}
+
+.eventEnd{
+    border-top-right-radius: 0.2rem;
+    border-bottom-right-radius: 0.2rem;
+    width: calc(100% - 0.75rem);
+}
+
+.eventStart.eventEnd{
+    width: calc(100% - 1.50rem);
+}
+
+.previousNextMonth{
+    color: darkgray;
+}
+
+#filterButton{
+    margin-right: 10px;
+}
+
+.addEventButton{
+    width: 100%;
+    text-align: center;
+    margin-top: 1em;
+}
+
+.addEventButton .btn{
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 40%;
+    border-radius: 50%;
+
+}

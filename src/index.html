@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Web Calendar</title>
+    <link rel="icon" href="img/icon.png" type="image/png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--    CSS-->
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons%7CRoboto">
+
+    <!--    JS-->
+    <script src="js/bootstrap/jquery-3.5.1.slim.min.js"></script>
+    <script src="js/bootstrap/popper.min.js"></script>
+    <script src="js/bootstrap/bootstrap.min.js"></script>
+
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">
+        <img src="img/icon.png" width="30" height="30" class="d-inline-block align-top"
+             alt="">
+        Web Calendar
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav" id="navbar-links">
+            <li class="nav-item active">
+                <a class="nav-link" href="javascript:changeView(0)">Month</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="javascript:changeView(1)">List</a>
+            </li>
+        </ul>
+    </div>
+    <!--    <a class="navbar-brand" href="javascript:showAddEvent(null, null, null)">Add Event</a>-->
+</nav>
+
+<div id="listView" class="container">
+    <h3>Events</h3>
+
+    <ul id="event-list" class="list-group">
+        <li class="spinnerItem align-self-center">
+            <div class="spinner-border" role="status"></div>
+        </li>
+    </ul>
+    <div class="addEventButton">
+        <button type="button" class="btn btn-primary mx-auto material-icons" onclick="showAddEvent(null)">add</button>
+    </div>
+
+</div>
+
+<div id="calendarMonthView" class="container-fluid">
+    <div id="calendarMonth">
+        <h2 id="calendarTitle">July 2020</h2>
+        <div class="calendarButtons">
+            <button id="filterButton" class="btn btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown">Filter</button>
+            <div id="filterDropdown" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#">All</a>
+            </div>
+            <button type="button" class="btn btn-outline-primary material-icons" onclick="showPrevious()">
+                keyboard_arrow_left
+            </button>
+            <button type="button" class="btn btn-outline-primary" onclick="showToday()">TODAY</button>
+            <button type="button" class="btn btn-outline-primary material-icons" onclick="showNext()">
+                keyboard_arrow_right
+            </button>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Monday</th>
+                    <th scope="col">Tuesday</th>
+                    <th scope="col">Wednesday</th>
+                    <th scope="col">Thursday</th>
+                    <th scope="col">Friday</th>
+                    <th scope="col">Saturday</th>
+                    <th scope="col">Sunday</th>
+                </tr>
+                </thead>
+                <tbody id="monthTableBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="detailsModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form id="detailsForm">
+                <button type="button" class="close" data-dismiss="modal" id="modalCloseButton">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div id="top-image-container" class="top-image-container-hover">
+                    <img src="img/calendar.jpg" id="modalImage" alt="current image of event">
+                    <img src="img/edit_image.png" id="hover-image" title="Click to set image" alt="click to set image">
+                    <input id="image-input" onchange="setUploadedImage()" type="file" accept="image/png,image/jpeg"/>
+                </div>
+
+                <div id="detailsModalBody" class="modal-body">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text material-icons" id="titleField-label">title</span>
+                        </div>
+                        <input id="titleField" type="text" class="form-control" placeholder="Title" aria-label="Title"
+                               aria-describedby="titleField-label" required>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text material-icons" id="descField-label">description</span>
+                        </div>
+                        <textarea id="descField" class="form-control" placeholder="Description"
+                                  aria-label="Description" aria-describedby="descField-label"
+                                  maxlength="2000"></textarea>
+                    </div>
+
+                    <hr>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                        <span class="input-group-text time-label" id="startDateField-label">
+                            <span class="material-icons">schedule</span>
+                            <span class="fieldText">Start</span>
+                        </span>
+                        </div>
+                        <input id="startDateField" type="date" class="form-control"
+                               aria-describedby="startDateField-label" required>
+                        <input id="startTimeField" type="time" class="form-control"
+                               aria-describedby="startDateField-label" required>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                        <span class="input-group-text time-label" id="endDateField-label">
+                            <span class="material-icons">schedule</span>
+                            <span class="fieldText">End</span>
+                        </span>
+                        </div>
+                        <input id="endDateField" type="date" class="form-control" aria-describedby="endDateField-label"
+                               required>
+                        <input id="endTimeField" type="time" class="form-control" aria-describedby="endDateField-label"
+                               required>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                        <span class="input-group-text time-label" id="allDaySwitch-label">
+                            <span class="material-icons">schedule</span>
+                            <span class="fieldText">All day</span>
+                        </span>
+                        </div>
+                        <div class="mx-auto allDaySpacer">
+                        </div>
+                        <div class="input-group-append">
+                            <div class="input-group-text" id="allDaySwitch-box">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="allDaySwitch">
+                                    <label class="custom-control-label" for="allDaySwitch"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text material-icons" id="locationField-label">location_on</span>
+                        </div>
+                        <input id="locationField" type="text" class="form-control" placeholder="Location"
+                               aria-label="Location" aria-describedby="locationField-label">
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text material-icons" id="organizerField-label">person</span>
+                        </div>
+                        <input id="organizerField" type="email" class="form-control" placeholder="Organizer"
+                               aria-label="Organizer" aria-describedby="organizerField-label" required>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text material-icons" id="webPageField-label">language</span>
+                        </div>
+                        <input id="webPageField" type="text" class="form-control" placeholder="Webpage"
+                               aria-label="Webpage" aria-describedby="webPageField-label">
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text material-icons" id="statusField-label">event</span>
+                        </div>
+                        <div class="input-group-append" id="statusGroup">
+                        </div>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text material-icons" id="categoryDropdown-label">category</span>
+                        </div>
+                        <button id="categoryDropdownButton" class="btn btn-outline-secondary dropdown-toggle"
+                                type="button" data-toggle="dropdown" data-target="categoryDropdown" aria-haspopup="true"
+                                aria-expanded="false">Dropdown
+                        </button>
+                        <div class="dropdown-menu" id="categoryDropDownMenu">
+                            <div id="categoryDropdown">
+
+                            </div>
+                            <div class="input-group">
+                                <input id="newCategoryField" type="text" class="form-control"
+                                       placeholder="New Category">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary material-icons" type="button"
+                                            onclick="addCategory()">add
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer" id="modalFooter">
+                    <button type="submit" class="btn btn-primary">
+                        <span class="material-icons" id="modalSaveIcon">edit</span>
+                        <span class="button-label" id="modalSaveText">edit</span>
+                    </button>
+                    <button id="modalDeleteButton" type="button" class="btn btn-primary"
+                            onclick="deleteAsk()"
+                            data-dismiss="modal">
+                        <span class="material-icons">delete</span>
+                        <span class="button-label">Delete</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Confirmation Modal-->
+<div id="confirmationModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmationTitle">
+                    Title
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="confirmationBody">
+                Body
+            </div>
+            <div class="modal-footer">
+                <button id="confirmationYes" type="button" class="btn btn-primary" data-dismiss="modal">Yes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/main-script.js"></script>
+</body>
+</html>
