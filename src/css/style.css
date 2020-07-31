@@ -2,6 +2,12 @@ body{
     font-family: Roboto, sans-serif;
 }
 
+.clickable > input[disabled]{
+    cursor: pointer;
+}
+
+
+
 .navbar{
     z-index: 10;
     box-shadow: 0 0 0.5rem black;
@@ -12,7 +18,7 @@ body{
     text-transform: uppercase;
 }
 
-#listView, #calendarMonthView , #image-input{
+#listView, #calendarMonthView, #categoryView , #image-input{
     display: none;
 }
 
@@ -31,13 +37,22 @@ body{
 }
 
 .list-group-item:hover{
-    background-color: #3f51b5;
+    background-color: #007bff;
     color: white;
 }
 
-.list-group-item:hover::after{
+.event-list:hover::after{
     float: right;
     content: "Show Details";
+}
+
+.list-item-noHover:hover{
+    background-color: white;
+}
+
+.category-list:hover::after{
+    float: right;
+    content: "Click to delete";
 }
 
 .modal-content{
@@ -124,13 +139,15 @@ body{
 }
 
 .allDaySpacer{
-    width: calc(100% - 160px);
+    width: calc(100% - 162px);
     border-top: 1px solid #ced4da;
     border-bottom: 1px solid #ced4da;
 }
 
-#allDaySwitch-box{
-    padding-left: 1rem;
+.colorPickerSpacer{
+    width: calc(100% - 170px);
+    border-top: 1px solid #ced4da;
+    border-bottom: 1px solid #ced4da;
 }
 
 #statusGroup{
@@ -157,6 +174,7 @@ body{
 #categoryDropDownMenu{
     padding: 10px;
 }
+
 .categoryCheckbox{
     margin-right: 5px;
 }
@@ -164,7 +182,6 @@ body{
     padding-left: 5px;
     cursor: pointer;
 }
-
 .dropdown-item > *{
     cursor: pointer;
 }
@@ -227,6 +244,7 @@ body{
     width: 2em;
     height: 2em;
     line-height: 2em;
+    color: white;
 }
 
 .calendarEvent{
@@ -241,9 +259,7 @@ body{
     visibility: hidden;
 }
 
-.calendarEvent:hover .calendarEvent{
-    background-color: red;
-}
+
 
 .eventStart{
     border-top-left-radius: 0.2rem;
@@ -284,4 +300,13 @@ body{
     line-height: 40%;
     border-radius: 50%;
 
+}
+
+#colorPicker{
+    border: none;
+    width: 44px;
+}
+
+.appendBox{
+    padding-left: 1rem;
 }

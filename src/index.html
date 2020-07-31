@@ -36,9 +36,11 @@
             <li class="nav-item">
                 <a class="nav-link" href="javascript:changeView(1)">List</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="javascript:changeView(2)">Categories</a>
+            </li>
         </ul>
     </div>
-    <!--    <a class="navbar-brand" href="javascript:showAddEvent(null, null, null)">Add Event</a>-->
 </nav>
 
 <div id="listView" class="container">
@@ -59,7 +61,9 @@
     <div id="calendarMonth">
         <h2 id="calendarTitle">July 2020</h2>
         <div class="calendarButtons">
-            <button id="filterButton" class="btn btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown">Filter</button>
+            <button id="filterButton" class="btn btn-outline-primary dropdown-toggle" type="button"
+                    data-toggle="dropdown">Filter
+            </button>
             <div id="filterDropdown" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" href="#">All</a>
             </div>
@@ -91,6 +95,17 @@
     </div>
 </div>
 
+<div id="categoryView" class="container">
+    <h3>Categories</h3>
+
+    <ul id="category-list" class="list-group">
+        <li class="spinnerItem align-self-center">
+            <div class="spinner-border" role="status"></div>
+        </li>
+    </ul>
+
+</div>
+
 <!-- Modal -->
 <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
@@ -100,9 +115,11 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <div id="top-image-container" class="top-image-container-hover">
-                    <img src="img/calendar.jpg" id="modalImage" alt="current image of event">
-                    <img src="img/edit_image.png" id="hover-image" title="Click to set image" alt="click to set image">
-                    <input id="image-input" onchange="setUploadedImage()" type="file" accept="image/png,image/jpeg"/>
+                    <img src="img/calendar.jpg" id="modalImage" alt="current image of event" draggable="false">
+                    <img src="img/edit_image.png" id="hover-image" title="Click to set image" alt="click to set image"
+                         ondragover="dragOverImage(event)" ondrop="dropImage(event)" draggable="false">
+                    <input id="image-input" onchange="setUploadedImage(null)" type="file"
+                           accept="image/png,image/jpeg"/>
                 </div>
 
                 <div id="detailsModalBody" class="modal-body">
@@ -151,20 +168,38 @@
                                required>
                     </div>
 
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
+                    <div style="display: flex">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
                         <span class="input-group-text time-label" id="allDaySwitch-label">
                             <span class="material-icons">schedule</span>
                             <span class="fieldText">All day</span>
                         </span>
+                            </div>
+                            <div class="mx-auto allDaySpacer">
+                            </div>
+                            <div class="input-group-append">
+                                <div class="input-group-text appendBox">
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="allDaySwitch">
+                                        <label class="custom-control-label" for="allDaySwitch"></label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="mx-auto allDaySpacer">
-                        </div>
-                        <div class="input-group-append">
-                            <div class="input-group-text" id="allDaySwitch-box">
-                                <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="allDaySwitch">
-                                    <label class="custom-control-label" for="allDaySwitch"></label>
+
+                        <div class="input-group mb-3" style="margin-left: 10px">
+                            <div class="input-group-prepend">
+                            <span class="input-group-text time-label" id="colorPicker-label">
+                                <span class="material-icons">palette</span>
+                                <span class="fieldText">Color</span>
+                            </span>
+                            </div>
+                            <div class="mx-auto colorPickerSpacer">
+                            </div>
+                            <div class="input-group-append">
+                                <div class="input-group-text appendBox">
+                                    <input type="color" id="colorPicker">
                                 </div>
                             </div>
                         </div>
@@ -172,7 +207,7 @@
 
                     <hr>
 
-                    <div class="input-group mb-3">
+                    <div class="input-group mb-3 clickable">
                         <div class="input-group-prepend">
                             <span class="input-group-text material-icons" id="locationField-label">location_on</span>
                         </div>
@@ -180,7 +215,7 @@
                                aria-label="Location" aria-describedby="locationField-label">
                     </div>
 
-                    <div class="input-group mb-3">
+                    <div class="input-group mb-3 clickable">
                         <div class="input-group-prepend">
                             <span class="input-group-text material-icons" id="organizerField-label">person</span>
                         </div>
@@ -188,11 +223,11 @@
                                aria-label="Organizer" aria-describedby="organizerField-label" required>
                     </div>
 
-                    <div class="input-group mb-3">
+                    <div class="input-group mb-3 clickable">
                         <div class="input-group-prepend">
                             <span class="input-group-text material-icons" id="webPageField-label">language</span>
                         </div>
-                        <input id="webPageField" type="text" class="form-control" placeholder="Webpage"
+                        <input id="webPageField" type="url" class="form-control" placeholder="Webpage"
                                aria-label="Webpage" aria-describedby="webPageField-label">
                     </div>
 
@@ -221,7 +256,7 @@
                                        placeholder="New Category">
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary material-icons" type="button"
-                                            onclick="addCategory()">add
+                                            onclick="addCategory(null)">add
                                     </button>
                                 </div>
                             </div>
@@ -230,13 +265,17 @@
 
                 </div>
                 <div class="modal-footer" id="modalFooter">
+                    <button id="modalDuplicateButton" type="button" class="btn btn-primary"
+                            onclick="duplicateEvent()" data-dismiss="modal">
+                        <span class="material-icons">content_copy</span>
+                        <span class="button-label">Duplicate</span>
+                    </button>
                     <button type="submit" class="btn btn-primary">
                         <span class="material-icons" id="modalSaveIcon">edit</span>
                         <span class="button-label" id="modalSaveText">edit</span>
                     </button>
                     <button id="modalDeleteButton" type="button" class="btn btn-primary"
-                            onclick="deleteAsk()"
-                            data-dismiss="modal">
+                            onclick="deleteAsk('event', null)" data-dismiss="modal">
                         <span class="material-icons">delete</span>
                         <span class="button-label">Delete</span>
                     </button>
