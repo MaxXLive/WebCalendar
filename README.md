@@ -4,6 +4,9 @@ Visual representation of calendar backend service.
 
 ![Screenshot](screenshot.png)
 
+## Author
+7055197 - TINF19A - DHBW Stuttgart
+
 ## Included Technologies
 - HTML 5
 - CSS 3
