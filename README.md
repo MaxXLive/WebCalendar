@@ -9,7 +9,8 @@ Visual representation of calendar backend service.
 - CSS 3
 - Javascript (ECMAScript 2015) (Not Internet Explorer compatible)
 - AJAX
-- Bootstrap CSS + JS (https://getbootstrap.com/)
+#### External
+- Bootstrap CSS + JS (https://getbootstrap.com/) (files in src/js/bootstrap and src/css/bootstrap)
 - jQuery (required for some bootstrap functions)
 - Google's Material Icon set (https://material.io/resources/icons)
 
