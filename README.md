@@ -5,7 +5,7 @@ Visual representation of calendar backend service.
 ![Screenshot](screenshot.png)
 
 ## Author
-Max Ermackov - [maxXLive](https://github.com/MaxXLive)
+Max Ermackov - [MaxXLive](https://github.com/MaxXLive)
 
 ## Included Technologies
 - HTML 5
